@@ -168,6 +168,7 @@ shinyServer(function(input, output, session) {
   })
   
   # Total Popuation Value Box output generation
+  #logger
   output$tab1_valuebox_total_population <- renderValueBox({
     if (input$tab1_dropdown_states == "All") {
       valueBox(
