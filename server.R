@@ -10,22 +10,22 @@ shinyServer(function(input, output, session) {
       session,
       'state.checkbox.filter',
       choiceNames = as.character(by_state_order$state_name),
-      choiceValues = by_state_order$State_Code,
+      choiceValues = by_state_order$district_code,
       selected = if (input$all.none)
-        by_state_order$State_Code
+        by_state_order$district_code
     )
   })
   
   checkbox_state_filter <- reactive({
     state_group %>%
-      filter(State_Code %in% input$state.checkbox.filter)
+      filter(district_code %in% input$state.checkbox.filter)
     
   })
   
   
   df3 <- reactive({
     state_group %>%
-      filter(State_Code %in% input$state.checkbox.filter)
+      filter(district_code %in% input$state.checkbox.filter)
     
   })
   
@@ -34,9 +34,9 @@ shinyServer(function(input, output, session) {
     state.filter <-
       subset(
         cities_dataset,
-        select = c(state_code , name_of_city, state_name, population_total)
+        select = c(district_code , name_of_city, state_name, population_total)
       ) %>%
-      filter(state_code %in% input$state.checkbox.filter)
+      filter(district_code %in% input$state.checkbox.filter)
     state.filter$pathString <- paste("world",
                           state.filter$state_name,
                           state.filter$name_of_city,
@@ -48,7 +48,7 @@ shinyServer(function(input, output, session) {
   
   df2 <- reactive({
     cities_dataset %>%
-      filter(state_code %in% input$state.checkbox.filter)
+      filter(district_code %in% input$state.checkbox.filter)
     
   })
   
@@ -110,7 +110,7 @@ shinyServer(function(input, output, session) {
     } else{
       cities_dataset_filtered <-
         filter(cities_dataset,
-               cities_dataset$state_code == input$tab1_dropdown_states)
+               cities_dataset$district_code == input$tab1_dropdown_states)
       leaflet.map <- leaflet()  %>% addTiles() %>%
         addMarkers(
           data = cities_dataset_filtered,
@@ -158,7 +158,7 @@ shinyServer(function(input, output, session) {
         width = 6
       )
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       valueBox(cities_dataset_filtered$Total,
                "Total Cities",
                color = "purple",
@@ -178,7 +178,7 @@ shinyServer(function(input, output, session) {
         width = 6
       )
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       valueBox(cities_dataset_filtered$Population,
                "Total Population",
                color = "orange",
@@ -196,7 +196,7 @@ shinyServer(function(input, output, session) {
       color = "green",
       width = 6)
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       valueBox(
         round(cities_dataset_filtered$Male_Percent, 2),
         "% Male Population",
@@ -220,7 +220,7 @@ shinyServer(function(input, output, session) {
         width = 6
       )
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       valueBox(
         round(cities_dataset_filtered$Female_Percent, 2),
         "% Female Population",
@@ -243,7 +243,7 @@ shinyServer(function(input, output, session) {
       color = "red",
       width = 6)
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       valueBox(
         round(cities_dataset_filtered$Literates_Percent, 2),
         "Literacy Rate",
@@ -265,7 +265,7 @@ shinyServer(function(input, output, session) {
       color = "yellow",
       width = 6)
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       valueBox(round(cities_dataset_filtered$Sex_Ratio, 2),
                "Sex Ratio",
                color = "yellow",
@@ -324,7 +324,7 @@ shinyServer(function(input, output, session) {
       
       hc
     } else{
-      cities_dataset_filtered <- filter(state_group, state_group$State_Code == input$tab1_dropdown_states)
+      cities_dataset_filtered <- filter(state_group, state_group$district_code == input$tab1_dropdown_states)
       hc <- highchart() %>%
         hc_chart(polar = TRUE)  %>%
         hc_xAxis(
