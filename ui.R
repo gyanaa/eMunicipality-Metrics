@@ -6,10 +6,10 @@
 states.names <- unique(as.character(cities_dataset$state_name))
 
 # Converting state codes to factores
-cities_dataset$state_code <- as.factor(cities_dataset$state_code)
+cities_dataset$district_code <- as.factor(cities_dataset$district_code)
 
 # Finding unique state codes
-states.codes <- unique(cities_dataset$state_code)
+states.codes <- unique(cities_dataset$district_code)
 
 # Options Names to display values on Map
 map.view.options.names <-
@@ -108,7 +108,7 @@ navbarPage(
           c(
             "ALL Districts" = "All",
             structure(
-              by_state_order$State_Code,
+              by_state_order$district_code,
               names = as.character(by_state_order$state_name)
             )
           )
@@ -238,7 +238,7 @@ tabPanel(
         "state.checkbox.filter",
         label = NULL,
         choiceNames = as.character(by_state_order$state_name),
-        choiceValues = by_state_order$State_Code,
+        choiceValues = by_state_order$district_code,
         selected = c(35, 28, 22, 34, 3, 8, 19, 21, 20)
       )
       ,
