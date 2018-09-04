@@ -3,6 +3,7 @@ library(shiny)
 
 
 # Define server logic required to draw state.filter histogram
+#logger
 shinyServer(function(input, output, session) {
   observe({
     updateCheckboxGroupInput(
