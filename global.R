@@ -48,7 +48,7 @@ state_group <-
     Female_Grads_Percent = Female_Grads / Female_Population * 100,
     Male_Grads_Mean = Male_Grads / Total,
     Female_Grads_Mean = Female_Grads / Total,
-    State_Code = sum(state_code) / Total,
+    district_code = sum(district_code) / Total,
     Sex_Ratio = sum(sex_ratio) / Total,
     Child_Sex_Ratio = sum(child_sex_ratio) / Total
   ) %>% arrange(desc(Total))
@@ -88,18 +88,18 @@ state_group$state_name <-
 state_group$state_name <- as.factor(state_group$state_name)
 
 # Get the codes for all the states
-hcmap.state_codes <-
+hcmap.district_codes <-
   dplyr::select(filter(
     mapdata,
     tolower(mapdata$name) %in% tolower(state_group$state_name)
   ), c("hc-a2", "name"))
 
-hcmap.state_codes$name <- toupper(hcmap.state_codes$name)
+hcmap.district_codes$name <- toupper(hcmap.district_codes$name)
 
 # Merge the codes with the cities dataset
 cities_dataset.merge <-
   merge(state_group,
-        hcmap.state_codes,
+        hcmap.district_codes,
         by.x = "state_name",
         by.y = "name")
 cities_dataset.merge$state_name <-
@@ -126,7 +126,7 @@ lon.lng.split <- str_split_fixed(cities_dataset$location, ",", 2)
 cities_dataset$Longitude <- as.numeric(lon.lng.split[, 1])
 cities_dataset$Latitude <- as.numeric(lon.lng.split[, 2])
 
-spllitted_cities <- split(cities_dataset, cities_dataset$state_code)
+spllitted_cities <- split(cities_dataset, cities_dataset$district_code)
 
 by_state_order <-
   state_group[order(state_group$state_name), ]
